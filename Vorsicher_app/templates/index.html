@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Alarm Kit Package Calculator{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h1>Alarm Kit Package Calculator</h1>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="residence">Residence Cost:</label>
+            <select class="form-control" id="residence" name="residence" required>
+                <option value="">Select Residence Cost</option>
+                <option value="45">Casa Base (45)</option>
+                <option value="39">Casa Scontata (45)</option>
+                <option value="39">Apartamento Base (39)</option>
+                <option value="34">Apartamento Scontata (34)</option>
+                <option value="45">Azienda Base (45)</option>
+                <option value="39">Azienda Scontata (39)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="kit_base">Kit Base Cost:</label>
+            <select class="form-control" id="kit_base" name="kit_base" required>
+                <option value="">Select Kit Base Cost</option>
+                <option value="999">€999</option>
+                <option value="899">€899</option>
+                <option value="799">€799</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Number of Months:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="months" id="months48" value="0" required>
+                <label class="form-check-label" for="months48">No Financing</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="months" id="months48" value="48" required>
+                <label class="form-check-label" for="months48">48 months</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="months" id="months54" value="54">
+                <label class="form-check-label" for="months54">54 months</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="months" id="months60" value="60">
+                <label class="form-check-label" for="months60">60 months</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Additional Devices:</label>
+            {% for device in additional_devices %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="additional_devices" id="device{{ loop.index }}" value="{{ device }}">
+                <label class="form-check-label" for="device{{ loop.index }}">{{ device }}</label>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="apply_discount" name="apply_discount">
+            <label class="form-check-label" for="apply_discount">Apply Discount</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Calculate</button>
+    </form>
+
+    {% if total_cost %}
+    <div class="results mt-4">
+        <h2>Results:</h2>
+        <p><strong>Total Cost:</strong> €{{ total_cost|round(2) }}</p>
+        <p><strong>Commission (Mixed):</strong> €{{ commission_mixed|round(2) }}</p>
+        <p><strong>Commission (Zero):</strong> €{{ commission_zero|round(2) }}</p>
+        <p><strong>Commission (No Financing):</strong> €{{ commission_no_fin|round(2) }}</p>
+
+        {% if installment_1 %}
+        <p><strong>Installment 1:</strong> €{{ installment_1|round(2) }}</p>
+        {% endif %}
+
+        {% if installment_2 %}
+        <p><strong>Installment 2:</strong> €{{ installment_2|round(2) }}</p>
+        {% endif %}
+
+        <h3>Selected Devices:</h3>
+        <ul>
+        {% for device in selected_devices %}
+            <li>{{ device }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
