@@ -76,11 +76,11 @@
         <p><strong>Commission (No Financing):</strong> €{{ commission_no_fin|round(2) }}</p>
 
         {% if installment_1 %}
-        <p><strong>Installment 1:</strong> €{{ installment_1|round(2) }}</p>
+        <p><strong>Monthy payment when Vorsicher pays all interest:</strong> €{{ installment_1|round(2) }}</p>
         {% endif %}
 
         {% if installment_2 %}
-        <p><strong>Installment 2:</strong> €{{ installment_2|round(2) }}</p>
+        <p><strong>Montly payment when interest is distributed:</strong> €{{ installment_2|round(2) }}</p>
         {% endif %}
 
         <h3>Selected Devices:</h3>
